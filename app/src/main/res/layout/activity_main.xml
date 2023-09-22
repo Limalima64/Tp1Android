@@ -1,7 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    android:layout_alignParentStart="false"
+    android:layout_centerVertical="false"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/iv_imageRestaurant"
+        android:layout_width="177dp"
+        android:layout_height="263dp"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:src="@drawable/reservation" />
+
+    <TextView
+        android:id="@+id/tv_reservoTable"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:text="ReservoTable"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp" />
+
+    <Spinner
+        android:id="@+id/sp_restaurants"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0" />
+
+    <TextView
+        android:id="@+id/tv_nombrePlace"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0"
+        android:text="TextView"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="0"
+        android:onClick="onClickPageReservation"
+        android:text="@string/reserver"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_afficherReservations"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="0"
+        android:onClick="onClickPageToutReservations"
+        android:text="@string/afficherReservations"
+        android:textSize="16sp" />
+
+</LinearLayout>
