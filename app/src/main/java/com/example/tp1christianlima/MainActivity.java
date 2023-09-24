@@ -1,5 +1,6 @@
 package com.example.tp1christianlima;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_nombrePlace;
 
     private Restaurant restoChoisi;
+
+    ArrayList<Reservation> reserv3Brasseur = new ArrayList<>();
+    ArrayList<Reservation> reservElixor = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +89,53 @@ public class MainActivity extends AppCompatActivity {
     public void onClickPageReservation(View view) {
         Intent reservActivity = new Intent(MainActivity.this, PageReservation.class);
         reservActivity.putExtra("leResto", restoChoisi);
-        startActivity(reservActivity);
+        if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
+            reservActivity.putExtra("laListeChoisi", reserv3Brasseur);
+        }else{
+            reservActivity.putExtra("laListeChoisi", reservElixor);
+        }
+        startActivityForResult(reservActivity, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Resources resources = getResources();
+
+        if(requestCode == 1){
+            if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
+                reserv3Brasseur.addAll(data.getParcelableArrayListExtra("renvoieListe"));
+                //probelme quand on cree deux reservation d'un coups et qu'on revien a la page principal, car ca calcul seulement le derniere item mis dans la liste et non l'avant dernier si on a cree 2 a la fois
+                unResto1.setNbPlacesRestantes((unResto1.getNbPlacesRestantes()) - (reserv3Brasseur.get(reserv3Brasseur.size()-1).getNbPlace()));
+            }else{
+                reservElixor.addAll(data.getParcelableArrayListExtra("renvoieListe"));
+                    unResto2.setNbPlacesRestantes((unResto2.getNbPlacesRestantes()) - (reservElixor.get(reservElixor.size()-1).getNbPlace()));
+            }
+
+            if(restoChoisi.getNbPlacesRestantes() <= 4){
+                if (restoChoisi.getNbPlacesRestantes() == 0 || restoChoisi.getNbPlacesRestantes() == 1){
+                    tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.uneOuAucunePlace));
+
+                }else{
+                    tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                }
+                tv_nombrePlace.setTextColor(Color.RED);
+            }else{
+                tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                tv_nombrePlace.setTextColor(Color.BLUE);
+            }
+        }
     }
 
     public void onClickPageToutReservations(View view) {
         Intent affichageLesReservsActivity = new Intent(MainActivity.this, PageAffichageReservations.class);
         affichageLesReservsActivity.putExtra("leResto", restoChoisi);
+        if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
+            affichageLesReservsActivity.putExtra("laListeChoisi", reserv3Brasseur);
+        }else{
+            affichageLesReservsActivity.putExtra("laListeChoisi", reservElixor);
+        }
         startActivity(affichageLesReservsActivity);
     }
 }

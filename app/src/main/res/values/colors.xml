@@ -2,5 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name = "background">#EFDC97</color>
+    <color name ="background">#EFDC97</color>
+    <color name ="heureFin">#918E8E</color>
 </resources>

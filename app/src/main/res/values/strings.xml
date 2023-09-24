@@ -4,4 +4,7 @@
     <string name="afficherReservations">Show all reservations</string>
     <string name="uneOuAucunePlace">remaining place</string>
     <string name="plus1Places">remaining places</string>
+    <string name="nom">Name of the person</string>
+    <string name="telephone">Phone number</string>
+    <string name="reservationTable">Book the table</string>
 </resources>
