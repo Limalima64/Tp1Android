@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -38,10 +39,14 @@ public class PageReservation extends AppCompatActivity {
     private EditText et_nom;
     private EditText et_telephone;
 
+    ArrayList<Reservation> laListe = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_reservation);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv_nomResto = findViewById(R.id.tv_nomResto);
         tv_AffichageNombrePlaces = findViewById(R.id.tv_affichageNombrePlaces);
@@ -187,11 +192,11 @@ public class PageReservation extends AppCompatActivity {
         datePicker.show();
     }
 
-    public void onClckReservation(View view) {
+    public void onClickReservation(View view) {
 
         Intent intentafficher = getIntent();
         Restaurant leResto = intentafficher.getParcelableExtra("leResto");
-        ArrayList<Reservation> laListe = intentafficher.getParcelableArrayListExtra("laListeChoisi");
+        laListe = intentafficher.getParcelableArrayListExtra("laListeChoisi");
         Resources resources = getResources();
 
         et_nom = findViewById(R.id.et_nom);
@@ -248,5 +253,15 @@ public class PageReservation extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Vous devez au moins choisir une place pour faire une reservation!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -90,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
         Intent reservActivity = new Intent(MainActivity.this, PageReservation.class);
         reservActivity.putExtra("leResto", restoChoisi);
         if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
-            reservActivity.putExtra("laListeChoisi", reserv3Brasseur);
+            reservActivity.putParcelableArrayListExtra("laListeChoisi", reserv3Brasseur);
         }else{
-            reservActivity.putExtra("laListeChoisi", reservElixor);
+            reservActivity.putParcelableArrayListExtra("laListeChoisi", reservElixor);
         }
         startActivityForResult(reservActivity, 10);
     }
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Resources resources = getResources();
         if (data != null) {
-            Resources resources = getResources();
             if (requestCode == 10) {
-                if (restoChoisi.getNomRestaurant().equals("3 Brasseurs")) {
+               if (restoChoisi.getNomRestaurant().equals("3 Brasseurs")) {
                     reserv3Brasseur.clear();
                     unResto1.setNbPlacesRestantes(unResto1.getNbPlacesMax());
                     reserv3Brasseur.addAll(data.getParcelableArrayListExtra("renvoieListe"));
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_nombrePlace.setTextColor(Color.BLUE);
                 }
             }
+        }else{
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -139,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
         Intent affichageLesReservsActivity = new Intent(MainActivity.this, PageAffichageReservations.class);
         affichageLesReservsActivity.putExtra("leResto", restoChoisi);
         if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
-            affichageLesReservsActivity.putExtra("laListeChoisi", reserv3Brasseur);
+            affichageLesReservsActivity.putParcelableArrayListExtra("laListeChoisi", reserv3Brasseur);
         }else{
-            affichageLesReservsActivity.putExtra("laListeChoisi", reservElixor);
+            affichageLesReservsActivity.putParcelableArrayListExtra("laListeChoisi", reservElixor);
         }
         startActivity(affichageLesReservsActivity);
     }

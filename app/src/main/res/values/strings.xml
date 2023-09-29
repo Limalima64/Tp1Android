@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tp1ChristianLima</string>
+    <string name="app_name">Practical Work 1 - Christian Lima</string>
     <string name="reserver">Book a table</string>
     <string name="afficherReservations">Show all reservations</string>
     <string name="uneOuAucunePlace">remaining place</string>

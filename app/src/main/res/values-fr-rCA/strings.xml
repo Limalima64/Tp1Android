@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tp1ChristianLima</string>
+    <string name="app_name">Travail Pratique 1 - Christian Lima</string>
     <string name="reserver">Réserver une table</string>
     <string name="afficherReservations">Afficher les réservations</string>
     <string name="uneOuAucunePlace">place restante</string>

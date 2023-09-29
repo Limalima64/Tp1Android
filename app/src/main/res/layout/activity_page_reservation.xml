@@ -147,7 +147,7 @@
         android:id="@+id/btn_reservationTable"
         android:layout_width="0dp"
         android:layout_height="59dp"
-        android:onClick="onClckReservation"
+        android:onClick="onClickReservation"
         android:text="@string/reservationTable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
