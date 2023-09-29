@@ -3,6 +3,7 @@ package com.example.tp1christianlima;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -205,7 +207,7 @@ public class PageReservation extends AppCompatActivity {
                         laListe.add(new Reservation(laListe.size()+1, et_dateReserv.getText().toString(), nombrePlaceReserv, sp_heureDebut.getSelectedItem().toString(), et_heureFin.getText().toString(), et_nom.getText().toString(), et_telephone.getText().toString()));
                         Intent renvoyerLaListe = new Intent();
                         renvoyerLaListe.putExtra("renvoieListe", laListe);
-                        setResult(1, renvoyerLaListe);
+                        setResult(10, renvoyerLaListe);
                         Toast.makeText(this, "La réservation au nom de: " + et_nom.getText() + " à bien été sauvegarder!", Toast.LENGTH_SHORT).show();
                         Log.v("Information réservation", "Le numero de reservation: " + laListe.get(laListe.size()-1).getNoReservation() + ", le nombre de place: " + laListe.get(laListe.size()-1).getNbPlace() + ", la date: " + laListe.get(laListe.size()-1).getDateReservation().toString() + ", l'heure du debut: " + laListe.get(laListe.size()-1).getBlocReservationDebut());
                         sb_places.setProgress(0);
@@ -226,6 +228,9 @@ public class PageReservation extends AppCompatActivity {
                             tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
                             tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
                         }
+
+                        //Enlever le clavier
+
                     }else{
                         Toast.makeText(this, "Le numéro téléphone inscrit pour la reservation n'est pas acceptable!",  Toast.LENGTH_SHORT).show();
                     }

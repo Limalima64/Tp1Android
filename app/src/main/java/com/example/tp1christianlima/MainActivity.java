@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tv_nombrePlace = findViewById(R.id.tv_nombrePlace);
                 Resources resources = getResources();
-                if(parent.getItemAtPosition(position).toString() == "3 Brasseurs"){
+                if("3 Brasseurs".equals(parent.getItemAtPosition(position).toString())){
                     restoChoisi = unResto1;
                 }else{
                     restoChoisi = unResto2;
@@ -94,36 +94,43 @@ public class MainActivity extends AppCompatActivity {
         }else{
             reservActivity.putExtra("laListeChoisi", reservElixor);
         }
-        startActivityForResult(reservActivity, 1);
+        startActivityForResult(reservActivity, 10);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Resources resources = getResources();
-
-        if(requestCode == 1){
-            if(restoChoisi.getNomRestaurant() == "3 Brasseurs"){
-                reserv3Brasseur.addAll(data.getParcelableArrayListExtra("renvoieListe"));
-                //probelme quand on cree deux reservation d'un coups et qu'on revien a la page principal, car ca calcul seulement le derniere item mis dans la liste et non l'avant dernier si on a cree 2 a la fois
-                unResto1.setNbPlacesRestantes((unResto1.getNbPlacesRestantes()) - (reserv3Brasseur.get(reserv3Brasseur.size()-1).getNbPlace()));
-            }else{
-                reservElixor.addAll(data.getParcelableArrayListExtra("renvoieListe"));
-                    unResto2.setNbPlacesRestantes((unResto2.getNbPlacesRestantes()) - (reservElixor.get(reservElixor.size()-1).getNbPlace()));
-            }
-
-            if(restoChoisi.getNbPlacesRestantes() <= 4){
-                if (restoChoisi.getNbPlacesRestantes() == 0 || restoChoisi.getNbPlacesRestantes() == 1){
-                    tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.uneOuAucunePlace));
-
-                }else{
-                    tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+        if (data != null) {
+            Resources resources = getResources();
+            if (requestCode == 10) {
+                if (restoChoisi.getNomRestaurant().equals("3 Brasseurs")) {
+                    reserv3Brasseur.clear();
+                    unResto1.setNbPlacesRestantes(unResto1.getNbPlacesMax());
+                    reserv3Brasseur.addAll(data.getParcelableArrayListExtra("renvoieListe"));
+                    for (int i = 0; i < reserv3Brasseur.size(); i++) {
+                        unResto1.setNbPlacesRestantes(unResto1.getNbPlacesRestantes() - reserv3Brasseur.get(i).getNbPlace());
+                    }
+                } else {
+                    reservElixor.clear();
+                    unResto2.setNbPlacesRestantes(unResto2.getNbPlacesMax());
+                    reservElixor.addAll(data.getParcelableArrayListExtra("renvoieListe"));
+                    for (int i = 0; i < reservElixor.size(); i++) {
+                        unResto2.setNbPlacesRestantes(unResto2.getNbPlacesRestantes() - reservElixor.get(i).getNbPlace());
+                    }
                 }
-                tv_nombrePlace.setTextColor(Color.RED);
-            }else{
-                tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
-                tv_nombrePlace.setTextColor(Color.BLUE);
+
+                if (restoChoisi.getNbPlacesRestantes() <= 4) {
+                    if (restoChoisi.getNbPlacesRestantes() == 0 || restoChoisi.getNbPlacesRestantes() == 1) {
+                        tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.uneOuAucunePlace));
+
+                    } else {
+                        tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                    }
+                    tv_nombrePlace.setTextColor(Color.RED);
+                } else {
+                    tv_nombrePlace.setText(restoChoisi.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                    tv_nombrePlace.setTextColor(Color.BLUE);
+                }
             }
         }
     }
