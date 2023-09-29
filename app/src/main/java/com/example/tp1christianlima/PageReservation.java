@@ -196,52 +196,57 @@ public class PageReservation extends AppCompatActivity {
 
         et_nom = findViewById(R.id.et_nom);
 
-        if (sb_places.getProgress() <= leResto.getNbPlacesRestantes()){
-            //verifier si la date est valide
-            if(et_dateReserv.getText().toString().matches("\\d{1}/\\d{1}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{2}/\\d{1}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{1}/\\d{2}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")){
-                //verifier si le nom est valide
-                if(!et_nom.getText().toString().equals("")){
-                    //vérifier le numero de telephone
-                    if(et_telephone.getText().toString().matches("\\d{3}-\\d{3}-\\d{4}")){
-                       //Tout est valide alors on creer une reservation pour le restaurant choisi et on modifie la valeur du restaurant et on renvoie le restaurant a l'acceuil
-                        laListe.add(new Reservation(laListe.size()+1, et_dateReserv.getText().toString(), nombrePlaceReserv, sp_heureDebut.getSelectedItem().toString(), et_heureFin.getText().toString(), et_nom.getText().toString(), et_telephone.getText().toString()));
-                        Intent renvoyerLaListe = new Intent();
-                        renvoyerLaListe.putExtra("renvoieListe", laListe);
-                        setResult(10, renvoyerLaListe);
-                        Toast.makeText(this, "La réservation au nom de: " + et_nom.getText() + " à bien été sauvegarder!", Toast.LENGTH_SHORT).show();
-                        Log.v("Information réservation", "Le numero de reservation: " + laListe.get(laListe.size()-1).getNoReservation() + ", le nombre de place: " + laListe.get(laListe.size()-1).getNbPlace() + ", la date: " + laListe.get(laListe.size()-1).getDateReservation().toString() + ", l'heure du debut: " + laListe.get(laListe.size()-1).getBlocReservationDebut());
-                        sb_places.setProgress(0);
-                        et_dateReserv.setText("");
-                        et_nom.setText("");
-                        et_telephone.setText("");
-                        sp_heureDebut.setSelection(0);
-                        leResto.setNbPlacesRestantes((leResto.getNbPlacesRestantes()) - (laListe.get(laListe.size()-1).getNbPlace()));
-                        if(leResto.getNbPlacesRestantes() <= 4){
-                            if (leResto.getNbPlacesRestantes() == 0 || leResto.getNbPlacesRestantes() == 1){
-                                tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.uneOuAucunePlace));
+        if(sb_places.getProgress() != 0) {
+            //verifier si le nombre de places choisi entre dans le nombre de places restantes
+            if (sb_places.getProgress() <= leResto.getNbPlacesRestantes()) {
+                //verifier si la date est valide
+                if (et_dateReserv.getText().toString().matches("\\d{1}/\\d{1}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{2}/\\d{1}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{1}/\\d{2}/\\d{4}") || et_dateReserv.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                    //verifier si le nom est valide
+                    if (!et_nom.getText().toString().equals("")) {
+                        //vérifier le numero de telephone
+                        if (et_telephone.getText().toString().matches("\\d{3}-\\d{3}-\\d{4}")) {
+                            //Tout est valide alors on creer une reservation pour le restaurant choisi et on modifie la valeur du restaurant et on renvoie le restaurant a l'acceuil
+                            laListe.add(new Reservation(laListe.size() + 1, et_dateReserv.getText().toString(), nombrePlaceReserv, sp_heureDebut.getSelectedItem().toString(), et_heureFin.getText().toString(), et_nom.getText().toString(), et_telephone.getText().toString()));
+                            Intent renvoyerLaListe = new Intent();
+                            renvoyerLaListe.putExtra("renvoieListe", laListe);
+                            setResult(10, renvoyerLaListe);
+                            Toast.makeText(this, "La réservation au nom de: " + et_nom.getText() + " à bien été sauvegarder!", Toast.LENGTH_SHORT).show();
+                            Log.v("Information réservation", "Le numero de reservation: " + laListe.get(laListe.size() - 1).getNoReservation() + ", le nombre de place: " + laListe.get(laListe.size() - 1).getNbPlace() + ", la date: " + laListe.get(laListe.size() - 1).getDateReservation().toString() + ", l'heure du debut: " + laListe.get(laListe.size() - 1).getBlocReservationDebut());
+                            sb_places.setProgress(0);
+                            et_dateReserv.setText("");
+                            et_nom.setText("");
+                            et_telephone.setText("");
+                            sp_heureDebut.setSelection(0);
+                            leResto.setNbPlacesRestantes((leResto.getNbPlacesRestantes()) - (laListe.get(laListe.size() - 1).getNbPlace()));
+                            if (leResto.getNbPlacesRestantes() <= 4) {
+                                if (leResto.getNbPlacesRestantes() == 0 || leResto.getNbPlacesRestantes() == 1) {
+                                    tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.uneOuAucunePlace));
 
-                            }else{
+                                } else {
+                                    tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                                }
+                                tv_AffichageNombrePlaces.setTextColor(Color.RED);
+                            } else {
                                 tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
+                                tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
                             }
-                            tv_AffichageNombrePlaces.setTextColor(Color.RED);
-                        }else{
-                            tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
-                            tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
+
+                            //Enlever le clavier
+
+                        } else {
+                            Toast.makeText(this, "Le numéro téléphone inscrit pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
                         }
-
-                        //Enlever le clavier
-
-                    }else{
-                        Toast.makeText(this, "Le numéro téléphone inscrit pour la reservation n'est pas acceptable!",  Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "La nom choisi pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(this, "La nom choisi pour la reservation n'est pas acceptable!",  Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "La date choisi pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(this, "La date choisi pour la reservation n'est pas acceptable!",  Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Il n'y a pas assez de place dans le restaurant pour la réservation!", Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(this, "Il n'y a pas assez de place dans le restaurant pour la réservation!",  Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vous devez au moins choisir une place pour faire une reservation!", Toast.LENGTH_SHORT).show();
         }
     }
 }

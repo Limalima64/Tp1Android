@@ -2,9 +2,13 @@ package com.example.tp1christianlima;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +27,16 @@ public class PageAffichageReservations extends AppCompatActivity {
 
     Spinner sp_dates;
 
+    private ListView lv_reservation;
+
+    private adapterReservation adapteurReservation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_affichage_reservations);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intentafficher = getIntent();
         Restaurant leResto = intentafficher.getParcelableExtra("leResto");
@@ -82,5 +92,19 @@ public class PageAffichageReservations extends AppCompatActivity {
         sp_dates.setAdapter(adapteur);
 
         //ListView
+
+        lv_reservation = findViewById(R.id.lv_reservation);
+
+        adapteurReservation = new adapterReservation(this, laListe);
+        lv_reservation.setAdapter(adapteurReservation);
+
+        lv_reservation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Reservation reservationChoisi = laListe.get(position);
+
+                Toast.makeText(getApplicationContext(), "Le numéro de réservation: " + reservationChoisi.getNoReservation() + " & Le numéro de téléphone: " + reservationChoisi.getTelPersonne(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

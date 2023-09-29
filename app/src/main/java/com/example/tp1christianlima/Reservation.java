@@ -70,7 +70,7 @@ public class Reservation implements Parcelable {
         this.blocReservationDebut = blocReservationDebut;
     }
 
-    public String getGetBlocReservationFin() {
+    public String getBlocReservationFin() {
         return blocReservationFin;
     }
 

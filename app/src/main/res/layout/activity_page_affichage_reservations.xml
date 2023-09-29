@@ -59,4 +59,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.221" />
+
+    <ListView
+        android:id="@+id/lv_reservation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/fondListView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_dates" />
 </androidx.constraintlayout.widget.ConstraintLayout>

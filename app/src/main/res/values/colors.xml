@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name ="background">#EFDC97</color>
     <color name ="heureFin">#918E8E</color>
+    <color name="fondListView">#8ACCB5</color>
 </resources>
