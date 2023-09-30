@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +33,8 @@ public class PageAffichageReservations extends AppCompatActivity {
 
     private adapterReservation adapteurReservation;
 
+    ArrayList<Reservation> reservParDate = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,6 @@ public class PageAffichageReservations extends AppCompatActivity {
 
         ArrayList<String> listDates = new ArrayList<>();
         for(int i = 0; i < laListe.size(); i++){
-
             listDates.add(laListe.get(i).getDateReservation());
         }
 
@@ -88,6 +90,15 @@ public class PageAffichageReservations extends AppCompatActivity {
             listDates.add("Aucune Date, créé une reservation!");
         }
 
+        for(int i = 0; i < listDates.size(); i++){
+            for(int j = i+1; j < listDates.size(); j++){
+                if(listDates.get(i).equals(listDates.get(j))){
+                    listDates.remove(j);
+                    j--;
+                }
+            }
+        }
+
         ArrayAdapter<String> adapteur = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listDates);
         adapteur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_dates.setAdapter(adapteur);
@@ -96,13 +107,31 @@ public class PageAffichageReservations extends AppCompatActivity {
 
         lv_reservation = findViewById(R.id.lv_reservation);
 
-        adapteurReservation = new adapterReservation(this, laListe);
-        lv_reservation.setAdapter(adapteurReservation);
+        sp_dates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                reservParDate.clear();
+
+                for(Reservation reserv: laListe){
+                    if(reserv.getDateReservation().equals(parent.getSelectedItem())){
+                        reservParDate.add(reserv);
+                    }
+                }
+
+                adapteurReservation = new adapterReservation(getApplicationContext(), reservParDate);
+                lv_reservation.setAdapter(adapteurReservation);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         lv_reservation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Reservation reservationChoisi = laListe.get(position);
+                Reservation reservationChoisi = reservParDate.get(position);
 
                 Toast.makeText(getApplicationContext(), "Le numéro de réservation: " + reservationChoisi.getNoReservation() + " & Le numéro de téléphone: " + reservationChoisi.getTelPersonne(), Toast.LENGTH_SHORT).show();
             }
