@@ -54,7 +54,7 @@
         android:layout_height="49dp"
         android:ems="10"
         android:focusable="false"
-        android:hint="Sélectionner une date pour la réservation"
+        android:hint="@string/choixDate"
         android:inputType="none"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

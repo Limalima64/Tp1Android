@@ -73,7 +73,8 @@ public class PageReservation extends AppCompatActivity {
             tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
         }
 
-        tv_nombrePlaceReserv.setText(sb_places.getProgress() + " place réservée");
+        tv_nombrePlaceReserv.setText(sb_places.getProgress() + " " + resources.getString(R.string.uneOuAucunePlaceChoisiSp));
+        // si l'utilisateur ne touche pas la bar alors on met la progression de base dans un variable, pour apres l'utiilser dans le click du bouton
         nombrePlaceReserv = sb_places.getProgress();
 
         // Faire en sorte que quand la bare augmente ou diminue on change le text
@@ -81,10 +82,11 @@ public class PageReservation extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progression, boolean fromUser) {
                 if (progression > 1){
-                    tv_nombrePlaceReserv.setText(progression + " places réservées");
+                    tv_nombrePlaceReserv.setText(progression + " " + resources.getString(R.string.plus1PlacesChoisiSp));
                 }else{
-                    tv_nombrePlaceReserv.setText(progression + " place réservée");
+                    tv_nombrePlaceReserv.setText(progression + " " + resources.getString(R.string.uneOuAucunePlaceChoisiSp));
                 }
+                //variable de la progression, pour l'utiliser quand on va reserver (bouton)
                 nombrePlaceReserv = progression;
             }
             @Override
@@ -215,7 +217,7 @@ public class PageReservation extends AppCompatActivity {
                             Intent renvoyerLaListe = new Intent();
                             renvoyerLaListe.putExtra("renvoieListe", laListe);
                             setResult(10, renvoyerLaListe);
-                            Toast.makeText(this, "La réservation au nom de: " + et_nom.getText() + " à bien été sauvegarder!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this,  resources.getString(R.string.ToastReservNom) + " " + et_nom.getText() + " " + resources.getString(R.string.ToastReservSauve), Toast.LENGTH_SHORT).show();
                             Log.v("Information réservation", "Le numero de reservation: " + laListe.get(laListe.size() - 1).getNoReservation() + ", le nombre de place: " + laListe.get(laListe.size() - 1).getNbPlace() + ", la date: " + laListe.get(laListe.size() - 1).getDateReservation().toString() + ", l'heure du debut: " + laListe.get(laListe.size() - 1).getBlocReservationDebut());
                             sb_places.setProgress(0);
                             et_dateReserv.setText("");
@@ -235,23 +237,21 @@ public class PageReservation extends AppCompatActivity {
                                 tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
                                 tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
                             }
-
-                            //Enlever le clavier
-
+                            //Enlever le clavier ICI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         } else {
-                            Toast.makeText(this, "Le numéro téléphone inscrit pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, resources.getString(R.string.ToastErreurNum), Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(this, "La nom choisi pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, resources.getString(R.string.ToastErreurNom), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "La date choisi pour la reservation n'est pas acceptable!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, resources.getString(R.string.ToastErreurDate), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Il n'y a pas assez de place dans le restaurant pour la réservation!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, resources.getString(R.string.ToastErreurPasPlace), Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(this, "Vous devez au moins choisir une place pour faire une reservation!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, resources.getString(R.string.ToastErreurPlaceChoisi), Toast.LENGTH_SHORT).show();
         }
     }
 

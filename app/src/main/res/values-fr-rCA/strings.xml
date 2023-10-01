@@ -9,4 +9,19 @@
     <string name="nom">Nom de la personne</string>
     <string name="telephone">Numéro de téléphone</string>
     <string name="reservationTable">Réserver la table</string>
+    <string name="choixDate">Sélectionner une date pour la réservation</string>
+    <string name="uneOuAucunePlaceChoisiSp">place réservée</string>
+    <string name="plus1PlacesChoisiSp">places réservées</string>
+    <string name="ToastReservNom">La réservation au nom de:</string>
+    <string name="ToastReservSauve">à bien été sauvegarder!</string>
+    <string name="ToastErreurNum">Le numéro téléphone inscrit pour la reservation n\'est pas acceptable!</string>
+    <string name="ToastErreurNom">Le nom choisi pour la reservation n\'est pas acceptable!</string>
+    <string name="ToastErreurDate">La date choisie pour la reservation n\'est pas acceptable!</string>
+    <string name="ToastErreurPasPlace">Il n\'y a pas assez de place dans le restaurant pour la réservation!</string>
+    <string name="ToastErreurPlaceChoisi">Vous devez au moins choisir une place pour faire une reservation!</string>
+    <string name="Titre3Page">Affichage des réservations</string>
+    <string name="TitreDate3Page">Sélectionner une date:</string>
+    <string name="ErreurAucuneDate3Page">Aucune date, créé une réservation!</string>
+    <string name="ToastPage3NumReserv">Le numéro de réservation:</string>
+    <string name="ToastPage3NumTel">Le numéro de téléphone:</string>
 </resources>

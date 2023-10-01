@@ -133,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
                     tv_nombrePlace.setTextColor(Color.BLUE);
                 }
             }
-        }else{
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         }
     }
 

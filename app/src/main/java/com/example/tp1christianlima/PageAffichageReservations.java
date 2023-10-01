@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -39,6 +40,8 @@ public class PageAffichageReservations extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_affichage_reservations);
+
+        Resources resources = getResources();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -87,7 +90,7 @@ public class PageAffichageReservations extends AppCompatActivity {
         });
 
         if(listDates.isEmpty()){
-            listDates.add("Aucune Date, créé une reservation!");
+            listDates.add(resources.getString(R.string.ErreurAucuneDate3Page));
         }
 
         for(int i = 0; i < listDates.size(); i++){
@@ -113,6 +116,7 @@ public class PageAffichageReservations extends AppCompatActivity {
 
                 reservParDate.clear();
 
+                //Enregistrer dans le tableau en croissant a partir de la date du debut de la reservation
                 for(Reservation reserv: laListe){
                     if(reserv.getDateReservation().equals(parent.getSelectedItem())){
                         reservParDate.add(reserv);
@@ -133,7 +137,7 @@ public class PageAffichageReservations extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Reservation reservationChoisi = reservParDate.get(position);
 
-                Toast.makeText(getApplicationContext(), "Le numéro de réservation: " + reservationChoisi.getNoReservation() + " & Le numéro de téléphone: " + reservationChoisi.getTelPersonne(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), resources.getString(R.string.ToastPage3NumReserv) + " " + reservationChoisi.getNoReservation() + " & " + resources.getString(R.string.ToastPage3NumTel) + " " + reservationChoisi.getTelPersonne(), Toast.LENGTH_SHORT).show();
             }
         });
     }
