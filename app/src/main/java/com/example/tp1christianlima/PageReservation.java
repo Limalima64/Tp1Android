@@ -200,6 +200,7 @@ public class PageReservation extends AppCompatActivity {
         Restaurant leResto = intentafficher.getParcelableExtra("leResto");
         laListe = intentafficher.getParcelableArrayListExtra("laListeChoisi");
         Resources resources = getResources();
+        Context context = view.getContext();
 
         et_nom = findViewById(R.id.et_nom);
 
@@ -237,7 +238,9 @@ public class PageReservation extends AppCompatActivity {
                                 tv_AffichageNombrePlaces.setText(leResto.getNbPlacesRestantes() + " " + resources.getString(R.string.plus1Places));
                                 tv_AffichageNombrePlaces.setTextColor(Color.BLUE);
                             }
-                            //Enlever le clavier ICI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //Enlever le clavier
+                            InputMethodManager clavier = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            clavier.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         } else {
                             Toast.makeText(this, resources.getString(R.string.ToastErreurNum), Toast.LENGTH_SHORT).show();
                         }

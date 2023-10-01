@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 public class PageAffichageReservations extends AppCompatActivity {
 
@@ -122,6 +124,14 @@ public class PageAffichageReservations extends AppCompatActivity {
                         reservParDate.add(reserv);
                     }
                 }
+
+                Collections.sort(reservParDate, new Comparator<Reservation>() {
+                    @Override
+                    public int compare(Reservation reserv1, Reservation reserv2) {
+
+                        return reserv1.getBlocReservationDebut().compareTo(reserv2.getBlocReservationDebut());
+                    }
+                });
 
                 adapteurReservation = new adapterReservation(getApplicationContext(), reservParDate);
                 lv_reservation.setAdapter(adapteurReservation);
