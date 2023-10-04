@@ -12,10 +12,9 @@
 
     <ImageView
         android:id="@+id/iv_imageRestaurant"
-        android:layout_width="177dp"
-        android:layout_height="172dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="75dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginLeft="150dp"
         android:src="@drawable/reservation" />
 
     <TextView
@@ -23,6 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="-90dp"
+        android:layout_marginBottom="0dp"
         android:layout_weight="0"
         android:text="ReservoTable"
         android:textColor="#FFFFFF"

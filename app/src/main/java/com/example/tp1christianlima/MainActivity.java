@@ -1,5 +1,6 @@
 package com.example.tp1christianlima;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -145,5 +146,34 @@ public class MainActivity extends AppCompatActivity {
             affichageLesReservsActivity.putParcelableArrayListExtra("laListeChoisi", reservElixor);
         }
         startActivity(affichageLesReservsActivity);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("restoBrasseur", unResto1);
+        outState.putParcelable("restoElixor", unResto2);
+        outState.putParcelableArrayList("listeBrasseur", reserv3Brasseur);
+        outState.putParcelableArrayList("listeElixor", reservElixor);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        unResto1 = savedInstanceState.getParcelable("restoBrasseur");
+        unResto2 = savedInstanceState.getParcelable("restoElixor");
+        reserv3Brasseur = savedInstanceState.getParcelableArrayList("listeBrasseur");
+        reservElixor = savedInstanceState.getParcelableArrayList("listeElixor");
+
+        unResto1.setNbPlacesRestantes(unResto1.getNbPlacesMax());
+        for (int i = 0; i < reserv3Brasseur.size(); i++) {
+            unResto1.setNbPlacesRestantes(unResto1.getNbPlacesRestantes() - reserv3Brasseur.get(i).getNbPlace());
+        }
+        unResto2.setNbPlacesRestantes(unResto2.getNbPlacesMax());
+        for (int i = 0; i < reservElixor.size(); i++) {
+            unResto2.setNbPlacesRestantes(unResto2.getNbPlacesRestantes() - reservElixor.get(i).getNbPlace());
+        }
     }
 }
