@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 tv_nombrePlace = findViewById(R.id.tv_nombrePlace);
                 Resources resources = getResources();
 
-                tv_nombrePlace.setText("Choisisez un restaurant!");
+                tv_nombrePlace.setText("Coihsisez un restaurant!");
                 tv_nombrePlace.setTextColor(Color.BLACK);
             }
         });
